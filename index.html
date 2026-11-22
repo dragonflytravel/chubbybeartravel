@@ -6,13 +6,34 @@
     <title>Chubby Bear Travel – Honest Travel Stories & Guides by Vinny</title>
     <meta name="description" content="Personal travel diaries, street food adventures, and practical itineraries around the world by Vinny.">
     <style>
-        body { font-family: Georgia, serif; line-height: 1.7; color: #222; max-width: 720px; margin: 0 auto; padding: 30px 20px; background: #faf9f6; }
-        header { border-bottom: 2px solid #222; padding-bottom: 20px; margin-bottom: 40px; }
-        header h1 { margin: 0; font-size: 2.2em; }
-        header p { color: #666; margin: 5px 0 0; font-style: italic; }
-        article { background: #fff; padding: 30px; margin-bottom: 35px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        article h2 { margin-top: 0; color: #111; }
-        .date { font-size: 0.85em; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: block; }
+        body { font-family: Georgia, serif; line-height: 1.7; color: #222; max-width: 760px; margin: 0 auto; padding: 30px 20px; background: #faf9f6; }
+        
+        /* Thanh Header & Menu bên phải */
+        header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-bottom: 2px solid #222; padding-bottom: 20px; margin-bottom: 35px; gap: 15px; }
+        .brand h1 { margin: 0; font-size: 2.1em; }
+        .brand p { color: #666; margin: 5px 0 0; font-style: italic; font-size: 0.95em; }
+        
+        /* Menu & Dropdown Countries */
+        nav { display: flex; align-items: center; gap: 20px; font-family: sans-serif; font-size: 0.95em; }
+        nav a, .dropbtn { color: #222; text-decoration: none; font-weight: bold; cursor: pointer; background: none; border: none; font-size: 1em; font-family: inherit; padding: 8px 12px; border-radius: 5px; }
+        nav a:hover, .dropdown:hover .dropbtn { background: #eeeae0; color: #c05621; }
+        
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; right: 0; background-color: #fff; min-width: 170px; box-shadow: 0 8px 16px rgba(0,0,0,0.12); border-radius: 6px; z-index: 10; border: 1px solid #eee; overflow: hidden; }
+        .dropdown-content a { color: #222; padding: 10px 16px; text-decoration: none; display: block; font-weight: normal; border-radius: 0; }
+        .dropdown-content a:hover { background-color: #faf9f6; color: #c05621; font-weight: bold; }
+        .dropdown:hover .dropdown-content { display: block; }
+
+        /* Thanh thông báo khi đang lọc quốc gia */
+        #filter-banner { display: none; background: #eeeae0; padding: 10px 18px; border-radius: 6px; margin-bottom: 25px; font-family: sans-serif; font-size: 0.9em; justify-content: space-between; align-items: center; }
+        #filter-banner button { background: #c05621; color: #fff; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.85em; }
+
+        /* Thẻ bài viết */
+        article { background: #fff; padding: 30px; margin-bottom: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        article h2 { margin-top: 5px; color: #111; }
+        .meta-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-family: sans-serif; }
+        .date { font-size: 0.82em; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        .country-tag { background: #f3ece2; color: #c05621; padding: 3px 10px; border-radius: 12px; font-size: 0.78em; font-weight: bold; }
         a { color: #c05621; text-decoration: underline; }
         footer { text-align: center; color: #777; font-size: 0.9em; margin-top: 50px; padding-top: 20px; border-top: 1px solid #ddd; }
     </style>
@@ -20,23 +41,49 @@
 <body>
 
 <header>
-    <h1>Chubby Bear Travel</h1>
-    <p>Personal travel diaries, street food adventures & honest guides by Vinny</p>
+    <div class="brand">
+        <h1>Chubby Bear Travel</h1>
+        <p>Personal travel diaries, street food adventures & honest guides by Vinny</p>
+    </div>
+
+    <nav>
+        <a href="#" onclick="filterCountry('All'); return false;">All Posts</a>
+        <div class="dropdown">
+            <button class="dropbtn">Countries ▾</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="filterCountry('Vietnam'); return false;">🇻🇳 Vietnam</a>
+                <a href="#" onclick="filterCountry('Japan'); return false;">🇯🇵 Japan</a>
+                <a href="#" onclick="filterCountry('Thailand'); return false;">🇹🇭 Thailand</a>
+                <a href="#" onclick="filterCountry('Sri Lanka'); return false;">🇱🇰 Sri Lanka</a>
+                <!-- Thêm tên quốc gia mới vào đây theo mẫu trên -->
+            </div>
+        </div>
+    </nav>
 </header>
 
-<main>
+<div id="filter-banner">
+    <span>Showing stories in: <strong id="current-country"></strong></span>
+    <button onclick="filterCountry('All')">Show All</button>
+</div>
+
+<main id="post-list">
     <!-- ================= DÁN BÀI VIẾT MỚI NHẤT VÀO NGAY DƯỚI DÒNG NÀY ================= -->
-       
-    <article>
-        <span class="date">November 22, 2026 • Ninh Binh, Vietnam</span>
+
+    <article data-country="Vietnam">
+        <div class="meta-row">
+            <span class="date">November 22, 2026 • Ninh Binh</span>
+            <span class="country-tag">Vietnam</span>
+        </div>
         <h2><a href="ninh-binh-vietnam.html" style="text-decoration: none; color: #111;">Ninh Binh, Vietnam: A Journey Through Limestone Mountains, Rivers and Rural Life</a></h2>
         <p>Often called “Ha Long Bay on land”, Ninh Binh is known for its spectacular karst landscape, peaceful rivers, and rural countryside...</p>
         <p><a href="ninh-binh-vietnam.html">Read full story →</a></p>
     </article>
 
-
-    <article>
-        <span class="date">November 22, 2026 • Hanoi, Vietnam</span>
+    <article data-country="Vietnam">
+        <div class="meta-row">
+            <span class="date">November 22, 2026 • Hanoi</span>
+            <span class="country-tag">Vietnam</span>
+        </div>
         <h2>Hidden Gems of Hanoi: A First-Timer’s Guide to Street Food</h2>
         <p>Stepping into Hanoi’s Old Quarter for the first time feels like walking straight into a living, breathing movie set. Motorbikes weave effortlessly through narrow streets, tiny plastic stools spill onto every sidewalk, and the rich aroma of simmering pho broth fills the air.</p>
         <p>If you are planning your first trip to Vietnam’s capital, skip the overly touristy checklist and spend a slow day getting lost in its authentic corners—from sipping warm egg coffee on a hidden balcony to grabbing smoky Bun Cha from a sidewalk charcoal grill.</p>
@@ -48,6 +95,29 @@
 <footer>
     <p>© 2026 Chubby Bear Travel by Vinny. All stories written from the road.</p>
 </footer>
+
+<script>
+    function filterCountry(country) {
+        const articles = document.querySelectorAll('#post-list article');
+        const banner = document.getElementById('filter-banner');
+        const label = document.getElementById('current-country');
+
+        if (country === 'All') {
+            articles.forEach(art => art.style.display = 'block');
+            banner.style.display = 'none';
+        } else {
+            articles.forEach(art => {
+                if (art.getAttribute('data-country') === country) {
+                    art.style.display = 'block';
+                } else {
+                    art.style.display = 'none';
+                }
+            });
+            label.textContent = country;
+            banner.style.display = 'flex';
+        }
+    }
+</script>
 
 </body>
 </html>
